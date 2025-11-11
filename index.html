@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESP Sensor Dashboard</title>
+<style>
+body { font-family: Arial, sans-serif; background:#222; color:#fff; display:flex; flex-direction:column; align-items:center; margin:0; }
+h1 { margin-top:20px; color:#00eaff; }
+.container { display:flex; flex-wrap:wrap; justify-content:center; margin:20px; gap:20px; }
+.card { background: #333; border-radius:15px; padding:20px 35px; min-width:180px; text-align:center; box-shadow:0 8px 16px rgba(0,0,0,0.6); transition: transform 0.3s; }
+.card:hover { transform: scale(1.05); }
+.card h2 { margin:0 0 10px; font-size:22px; color:#ffdd57; }
+.card .data { font-size:28px; font-weight:bold; color:#fff; }
+</style>
+<script>
+function fetchData() {
+  fetch('https://myhost.com/data.php') // لینک PHP سرور
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('temp').innerText = data.temp + ' °C';
+      document.getElementById('hum').innerText  = data.hum + ' %';
+      document.getElementById('pres').innerText = data.pres + ' hPa';
+      document.getElementById('lux').innerText  = data.lux + ' lx';
+      document.getElementById('dust').innerText = data.dust + ' µg/m³';
+    });
+}
+setInterval(fetchData, 2000);
+</script>
+</head>
+<body onload="fetchData()">
+<h1>ESP Sensor Dashboard</h1>
+<div class="container">
+<div class="card"><h2>Temperature</h2><div class="data" id="temp">--</div></div>
+<div class="card"><h2>Humidity</h2><div class="data" id="hum">--</div></div>
+<div class="card"><h2>Pressure</h2><div class="data" id="pres">--</div></div>
+<div class="card"><h2>Light</h2><div class="data" id="lux">--</div></div>
+<div class="card"><h2>Dust</h2><div class="data" id="dust">--</div></div>
+</div>
+</body>
+</html>
